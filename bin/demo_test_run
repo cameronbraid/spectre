@@ -60,12 +60,12 @@ class DemoTestRuns
   def demo_run_with_screenshots
     spectre = SpectreClient::Client.new('Nuffield', 'Templates', @url)
     puts "Created Spectre run"
-    sleep(2)
+    # sleep(2)
 
     setup_poltergeist
 
     visit "http://www.nuffieldhealth.com/"
-    sleep(2)
+    # sleep(2)
     screenshot_file = 'homepage.png'
     page.save_screenshot(screenshot_file)
     puts "Saved screenshot #{screenshot_file}"
@@ -85,7 +85,7 @@ class DemoTestRuns
     Capybara.reset_sessions!
 
     visit "http://www.nuffieldhealth.com/gyms/"
-    sleep(2)
+    # sleep(2)
     screenshot_file = 'gyms.png'
     page.save_screenshot(screenshot_file)
     puts "Saved screenshot #{screenshot_file}"
@@ -103,12 +103,12 @@ class DemoTestRuns
     Capybara.reset_sessions!
 
     visit "http://www.nuffieldhealth.com/about-us/"
-    sleep(2)
+    # sleep(2)
     screenshot_file = 'about_us.png'
     page.save_screenshot(screenshot_file)
     puts "Saved screenshot #{screenshot_file}"
     about_options = {
-      name: 'Gyms Division',
+      name: 'About Us',
       browser: 'Phantom',
       size: 1024,
       screenshot: File.new(screenshot_file, 'rb'),
