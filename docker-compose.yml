@@ -4,10 +4,12 @@ services:
   app:
     build: .
     ports:
-     - "3000:3000"
+     - "4000:3000"
     links:
      - db
     environment:
+      # - DEBUG=true
+      # - EXCON_DEBUG=true
       - RAILS_ENV=production
       - RAILS_SERVE_STATIC_FILES=true
       - RAILS_LOG_TO_STDOUT=true
@@ -17,6 +19,13 @@ services:
       - DOMAIN_NAME=app
       - PORT=:3000
       - PROTOCOL=http://
+      - DATASTORE_S3=true
+      - DATASTORE_S3_BUCKET_NAME=spectre
+      - DATASTORE_S3_ACCESS_KEY_ID=dev
+      - DATASTORE_S3_SECRET_ACCESS_KEY=sedugDM9SNouEMd3RJaHA6mBbs
+      - DATASTORE_S3_PATH_STYLE=true
+      - DATASTORE_S3_ENDPOINT=http://minio:9000
+
     volumes:
      - .:/app
     command: bash -c "rm -f /app/tmp/pids/*.pid && rake assets:precompile && SECRET_KEY_BASE=`rake secret` rails server -p 3000"
@@ -32,5 +41,18 @@ services:
     environment:
      - POSTGRES_DB=spectre
 
+  minio:
+    image: minio/minio
+    volumes:
+        - minio-data:/data
+    ports:
+        - 9000:9000
+    environment:
+        MINIO_ACCESS_KEY: dev
+        MINIO_SECRET_KEY: sedugDM9SNouEMd3RJaHA6mBbs
+    command: server /data
+    restart: unless-stopped
+
 volumes:
   data-db: {}
+  minio-data: {}
