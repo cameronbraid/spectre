@@ -86,7 +86,6 @@ class ScreenshotComparison
     test.screenshot_baseline = Pathname.new(image_paths[:baseline])
     test.screenshot_diff = Pathname.new(image_paths[:diff])
     test.save
-    test.create_thumbnails
   end
 
   def remove_temp_files(image_paths)
